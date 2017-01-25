@@ -3,21 +3,14 @@ package com.ly.spider.test;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
-import java.net.URL;
 import java.net.URLDecoder;
-import java.net.URLEncoder;
-import java.util.List;
-
-import javax.swing.text.html.HTML;
 
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 import org.jsoup.Connection.Response;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import com.ly.spider.app.Config;
-import com.ly.spider.engines.BaiduEngine;
 
 
 public class CommonTest {
@@ -25,7 +18,14 @@ public class CommonTest {
 	public static void main(String[] args) throws Exception {
 		//testUrl();
 		//testSogou();
+		testSo();
 		
+	}
+
+
+	private static void testSo() {
+		// TODO Auto-generated method stub
+		String url="https://www.so.com/s?q=AI&pn=1";
 	}
 
 

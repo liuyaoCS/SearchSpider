@@ -51,11 +51,17 @@ public class SoEngine extends Engine {
 		String title=urlEle.text();
 		System.out.println(title);
 		//summary
-		Elements summaryEles=searchItem.select("p.res-desc,p.mh-first-cont");
+		Elements summaryEles=searchItem.select("p.res-desc"
+				+ ",div.res-comm-con p,div.res-comm-con div.res-desc"
+				+ ",div.res-desc div.mh-summary");
 		if(summaryEles.size()==0){
 			return null;
 		}
+		//过滤 a cite 标签
 		Element summaryEle=summaryEles.get(0);
+		if(summaryEle.select("a,cite").size()>0){
+			return null;
+		}
 		String summary=summaryEle.text();
 		System.out.println("summary->"+summary);
 		//rank

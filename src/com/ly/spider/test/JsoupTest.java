@@ -35,7 +35,7 @@ public class JsoupTest {
 		Engine so=new SoEngine("https://www.so.com/s?",
 				"q", "pn",
 				"ul#m-result","li.res-list",
-				new int[]{1,2});
+				new int[]{1});
 		
 		for(String word:Config.keywords){
 //			baidu.request(word);
