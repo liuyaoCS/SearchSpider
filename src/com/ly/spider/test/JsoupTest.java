@@ -19,7 +19,7 @@ public class JsoupTest {
 		Engine baidu=new BaiduEngine("http://www.baidu.com/s?",
 				"wd", "pn",
 				"div#content_left","div.c-container",
-				new int[]{0,10});
+				new int[]{0});
 		//bing http://cn.bing.com/search?q=11&first=3 从第几条开始
 		Engine bing=new BingEngine("http://cn.bing.com/search?",
 				"q", "first",
@@ -38,10 +38,10 @@ public class JsoupTest {
 				new int[]{1});
 		
 		for(String word:Config.keywords){
-//			baidu.request(word);
+			baidu.request(word);
 //			bing.request(word);
 //			sogou.request(word);
-			so.request(word);
+//			so.request(word);
 		}
 	}
 }

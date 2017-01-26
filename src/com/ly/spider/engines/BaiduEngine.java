@@ -51,8 +51,25 @@ public class BaiduEngine extends Engine {
 		String title=urlEle.text();
 		System.out.println(title);
 		//summary
-		String summary=searchItem.text();
-		//System.out.println(summary);
+		Elements summaryEles=searchItem.select("div.c-span18 div.c-abstract"
+				+ ",div.c-abstract"
+				+ ",div.c-span18 p");
+		if(summaryEles.size()==0){
+			return null;
+		}
+		//过滤 a cite 标签
+		Element summaryEle;
+		if(summaryEles.size()==3){//div.c-span18 p
+			summaryEle=summaryEles.get(1);
+		}else{
+			summaryEle=summaryEles.get(0);
+		}
+		
+		if(summaryEle.select("a,cite").size()>0){
+			return null;
+		}
+		String summary=summaryEle.text();
+		System.out.println("summary->"+summary);
 		//rank
 		int rank_baidu=rank;
 		System.out.println("rank-baidu->"+rank_baidu);
