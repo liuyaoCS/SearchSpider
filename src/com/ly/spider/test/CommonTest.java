@@ -10,7 +10,10 @@ import org.jsoup.Jsoup;
 import org.jsoup.Connection.Response;
 import org.jsoup.nodes.Document;
 import org.jsoup.select.Elements;
+
 import com.ly.spider.app.Config;
+import com.ly.spider.app.JsoupConn;
+import com.ly.spider.util.SecureUtil;
 
 
 public class CommonTest {
@@ -18,11 +21,28 @@ public class CommonTest {
 	public static void main(String[] args) throws Exception {
 		//testUrl();
 		//testSogou();
-		testSo();
-		
+		//testSo();
+		testBD();
 	}
 
-
+	private static void testBD(){
+		//String url="https://www.baidu.com/s?wd=AI&pn=0";
+		try {
+			SecureUtil.trustAllHttpsCertificates();
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		String url="https://www.baidu.com/s?wd=AI&pn=0";
+		Document doc = null;
+		try {
+			doc = JsoupConn.getInstance(url).get();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println(doc.html());
+	}
 	private static void testSo() {
 		// TODO Auto-generated method stub
 		String url="https://www.so.com/s?q=AI&pn=1";

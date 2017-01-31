@@ -30,10 +30,14 @@ public class SoEngine extends Engine {
 		}
 		
 		Element urlEle = urlEles.get(0);
+		System.out.println("#########parse begin############");
 		//pageurl 
 		String rawUrl=urlEle.attr("href");
 		String pageurl=CommonUtil.getUrl(rawUrl);
-		System.out.println("#####################\n"+pageurl);
+		if(pageurl==null || pageurl.equals("")){
+			return null;
+		}
+		System.out.println("url->"+pageurl);
 		//pagecontent
 		String pagecontent="";
 		Response response=null;
@@ -49,7 +53,7 @@ public class SoEngine extends Engine {
 		
 		//title
 		String title=urlEle.text();
-		System.out.println(title);
+		System.out.println("title->"+title);
 		//summary
 		Elements summaryEles=searchItem.select("p.res-desc"
 				+ ",div.res-comm-con p,div.res-comm-con div.res-desc"

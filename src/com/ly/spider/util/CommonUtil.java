@@ -8,6 +8,9 @@ public class CommonUtil {
 	public static String getUrl(String rawUrl){
 		String ret=rawUrl;
 		String rawQuery=URI.create(rawUrl).getRawQuery();
+		if(rawQuery==null){
+			return null;
+		}
 		String[] querys=rawQuery.split("&");
 		for(String query : querys){
 			String[] kvs=query.split("=");

@@ -1,6 +1,9 @@
 package com.ly.spider.engines;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.net.ssl.HostnameVerifier;
 import javax.net.ssl.HttpsURLConnection;
@@ -14,6 +17,7 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import com.ly.spider.app.Config;
+import com.ly.spider.app.JsoupConn;
 import com.ly.spider.bean.SearchItem;
 import com.ly.spider.util.DBUtil;
 import com.ly.spider.util.SecureUtil;
@@ -57,15 +61,16 @@ public abstract class Engine {
 	    
 		for(int i:getSteps()){
 			
-			Connection conn = Jsoup.connect(baseUrl+intputName+"="+word+"&"+pageName+"="+i);
+			String url=baseUrl+intputName+"="+word+"&"+pageName+"="+i;
 			
 			Document doc = null;
 			try {
-				doc = conn.timeout(Config.Timeout).get();
+				doc = JsoupConn.getInstance(url).get();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+			if(doc==null)break;
 			
 			Element container = doc.select(getContainerTag()).get(0);
 			Elements list=container.select(getListTag());

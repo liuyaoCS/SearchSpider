@@ -6,6 +6,9 @@ public class Config {
 	
 	public static final String[] keywords=new String[]{
 		"AI",
-		//"mac"
+		"mac",
+		"创新",
+		"机器学习",
+		"国搜"
 	};
 }
