@@ -3,6 +3,7 @@ package com.ly.spider.util;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
@@ -14,6 +15,52 @@ import com.ly.spider.bean.SearchItem;
 public class DBUtil {
 	private static String SQL="insert into page(pageurl,title,summary,content,queryword,updatetime,rank_baidu,rank_sogou,rank_360,rank_bing) "
 			+ "values(?,?,?,?,?,?,?,?,?,?)";
+	private static String CLEAR="delete from page";
+	private static String ROLLBACK="alter table page AUTO_INCREMENT=1";
+	private static String COUNT="select count(*) as num from page";
+	public static int count(){
+		int count=0;
+		java.sql.Connection connection=null;
+		PreparedStatement statement=null;
+		try {
+			connection = DataSource.getInstance().getConnection();
+			//connection.setAutoCommit(false);
+			statement=(PreparedStatement) connection.prepareStatement(COUNT);
+			ResultSet rs=statement.executeQuery();
+			if(rs.next()){
+				count=rs.getInt("num");
+			}
+			statement.close();
+			
+			connection.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return count;
+	}
+	public static void emptyTable(){
+		java.sql.Connection connection=null;
+		PreparedStatement statement=null;
+		try {
+			connection = DataSource.getInstance().getConnection();
+			//connection.setAutoCommit(false);
+			statement=(PreparedStatement) connection.prepareStatement(CLEAR);
+			statement.executeUpdate();
+			statement.close();
+			System.out.println("clear page success");
+			
+			statement=(PreparedStatement) connection.prepareStatement(ROLLBACK);
+			statement.executeUpdate();
+			statement.close();
+			System.out.println("id roll back to 1");
+			
+			connection.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	public static void insertItem(SearchItem item){
 		
 		java.sql.Connection connection=null;

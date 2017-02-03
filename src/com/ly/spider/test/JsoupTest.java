@@ -1,20 +1,27 @@
 package com.ly.spider.test;
 
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.util.Properties;
+import java.util.Scanner;
+
 import com.ly.spider.app.Config;
 import com.ly.spider.engines.BaiduEngine;
 import com.ly.spider.engines.BingEngine;
 import com.ly.spider.engines.Engine;
 import com.ly.spider.engines.SoEngine;
 import com.ly.spider.engines.SogouEngine;
+import com.ly.spider.util.DBUtil;
 import com.ly.spider.util.SecureUtil;
 
 
 public class JsoupTest {
 
 	public static void main(String[] args) throws Exception {
+		DBUtil.emptyTable();
 		SecureUtil.trustAllHttpsCertificates();
-		
 		//baidu https://www.baidu.com/s?wd=11&pn=2 从第几条开始
 		Engine baidu=new BaiduEngine("https://www.baidu.com/s?",
 				"wd", "pn",
@@ -39,12 +46,18 @@ public class JsoupTest {
 		
 		long btime=System.currentTimeMillis();
 		System.out.println("begin time->"+btime);
-		for(String word:Config.keywords){
+		
+		Scanner scanner=new Scanner(new File(args[0]));//InputStream is=baidu.getClass().getResourceAsStream("/keywords");Config.keywords
+		while(scanner.hasNextLine()){
+			String word=scanner.nextLine();
 			baidu.request(word);
 			bing.request(word);
 			sogou.request(word);
 			so.request(word);
 		}
-		System.out.println("cost time->"+(System.currentTimeMillis()-btime)/1000+" seconds");
+		scanner.close();
+		
+		System.out.println("cost time->"+(System.currentTimeMillis()-btime)/1000+" seconds; "
+				+"data count->"+DBUtil.count());
 	}
 }

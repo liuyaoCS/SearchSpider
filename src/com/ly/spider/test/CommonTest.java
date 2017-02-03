@@ -13,6 +13,7 @@ import org.jsoup.select.Elements;
 
 import com.ly.spider.app.Config;
 import com.ly.spider.app.JsoupConn;
+import com.ly.spider.util.DBUtil;
 import com.ly.spider.util.SecureUtil;
 
 
@@ -22,7 +23,8 @@ public class CommonTest {
 		//testUrl();
 		//testSogou();
 		//testSo();
-		testBD();
+		//testBD();
+		System.out.println(DBUtil.count());
 	}
 
 	private static void testBD(){
