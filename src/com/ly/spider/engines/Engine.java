@@ -76,7 +76,8 @@ public abstract class Engine {
 			Elements list=container.select(getListTag());
 			for (Element searchItemEle : list){
 				int seq=(i>0 && i<10)?(i*10-10):i;
-				SearchItem item=parseItem(searchItemEle, word, seq+list.indexOf(searchItemEle));
+				seq+=list.indexOf(searchItemEle)+1;
+				SearchItem item=parseItem(searchItemEle, word, seq);
 				if(item!=null){
 					DBUtil.insertItem(item);
 				}

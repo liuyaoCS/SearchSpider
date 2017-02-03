@@ -68,6 +68,51 @@ public class DBUtil {
 		try {
 			connection = DataSource.getInstance().getConnection();
 			//connection.setAutoCommit(false);
+			//////////////过滤pageurl///////////////////
+			String SEARCH="select * from page where pageurl=?";
+			
+			statement=(PreparedStatement) connection.prepareStatement(SEARCH);
+			statement.setString(1, item.getPageurl());
+			ResultSet rs=statement.executeQuery();
+			if(rs.next()){
+				
+				if(item.getRank_baidu()>0 && rs.getInt("rank_baidu")==0){
+					String UPDATE_BAIDU="update page set rank_baidu=? where pageurl=?";
+					statement.close();
+					statement=(PreparedStatement) connection.prepareStatement(UPDATE_BAIDU);
+					statement.setInt(1, item.getRank_baidu());
+					statement.setString(2, item.getPageurl());
+					statement.executeUpdate();
+				}else if(item.getRank_360()>0 && rs.getInt("rank_360")==0){
+					String UPDATE_360="update page set rank_360=? where pageurl=?";
+					statement.close();
+					statement=(PreparedStatement) connection.prepareStatement(UPDATE_360);
+					statement.setInt(1, item.getRank_360());
+					statement.setString(2, item.getPageurl());
+					statement.executeUpdate();
+				}else if(item.getRank_sogou()>0 && rs.getInt("rank_sogou")==0){
+					String UPDATE_SOGOU="update page set rank_sogou=? where pageurl=?";
+					statement.close();
+					statement=(PreparedStatement) connection.prepareStatement(UPDATE_SOGOU);
+					statement.setInt(1, item.getRank_sogou());
+					statement.setString(2, item.getPageurl());
+					statement.executeUpdate();
+				}else if(item.getRank_bing()>0 && rs.getInt("rank_bing")==0){
+					String UPDATE_BING="update page set rank_bing=? where pageurl=?";
+					statement.close();
+					statement=(PreparedStatement) connection.prepareStatement(UPDATE_BING);
+					statement.setInt(1, item.getRank_bing());
+					statement.setString(2, item.getPageurl());
+					statement.executeUpdate();
+				}else{
+					//nothing to do
+				}
+				statement.close();
+				connection.close();
+				return;
+			}
+			///////////////////////////////////////////
+			statement.close();
 			statement=(PreparedStatement) connection.prepareStatement(SQL);
 			
 			Date date = new Date();//获得系统时间.

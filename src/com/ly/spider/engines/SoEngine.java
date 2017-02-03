@@ -33,7 +33,7 @@ public class SoEngine extends Engine {
 		System.out.println("#########parse begin############");
 		//pageurl 
 		String rawUrl=urlEle.attr("href");
-		String pageurl=CommonUtil.getUrl(rawUrl);
+		String pageurl=CommonUtil.getSoUrl(rawUrl);
 		if(pageurl==null || pageurl.equals("")){
 			return null;
 		}
@@ -42,7 +42,7 @@ public class SoEngine extends Engine {
 		String pagecontent="";
 		Response response=null;
 		try {
-			response = (Response) Jsoup.connect(rawUrl).timeout(Config.Timeout).execute();
+			response = (Response) Jsoup.connect(pageurl).timeout(Config.Timeout).execute();
 			pagecontent=response.body();
 			//System.out.println(pagecontent);
 		} catch (IOException e) {

@@ -5,7 +5,7 @@ import java.net.URI;
 import java.net.URLDecoder;
 
 public class CommonUtil {
-	public static String getUrl(String rawUrl){
+	public static String getSoUrl(String rawUrl){
 		String ret=rawUrl;
 		String rawQuery=URI.create(rawUrl).getRawQuery();
 		if(rawQuery==null){
@@ -24,6 +24,15 @@ public class CommonUtil {
 				}
 				break;
 			}
+		}
+		return ret;
+	}
+	public static String getSougouUrl(String body){
+		String ret="";
+		if(body.startsWith("<meta")){
+			int start=body.indexOf("(\"")+2;
+			int end=body.indexOf("\")");
+			ret=body.substring(start, end);
 		}
 		return ret;
 	}

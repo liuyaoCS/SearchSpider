@@ -4,10 +4,12 @@ import java.io.IOException;
 
 import org.jsoup.Jsoup;
 import org.jsoup.Connection.Response;
+import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
 import com.ly.spider.app.Config;
+import com.ly.spider.app.JsoupConn;
 import com.ly.spider.bean.SearchItem;
 import com.ly.spider.util.CommonUtil;
 
@@ -32,13 +34,20 @@ public class SogouEngine extends Engine {
 		Element urlEle = urlEles.get(0);
 		//pageurl 
 		String rawUrl=urlEle.attr("href");
-		String pageurl=CommonUtil.getUrl(rawUrl);
-		System.out.println("#####################\n"+pageurl);
-		//pagecontent
+		String pageurl="";
+		String rawContent="";
 		String pagecontent="";
 		Response response=null;
 		try {
 			response = (Response) Jsoup.connect(rawUrl).timeout(Config.Timeout).execute();
+			rawContent=response.body();
+			pageurl=CommonUtil.getSougouUrl(rawContent);
+			if(pageurl==null || pageurl.equals("")){
+				return null;
+			}
+			System.out.println("#####################\n"+pageurl);
+			//pagecontent
+			response = (Response) Jsoup.connect(pageurl).timeout(Config.Timeout).execute();
 			pagecontent=response.body();
 			//System.out.println(pagecontent);
 		} catch (IOException e) {
@@ -46,6 +55,7 @@ public class SogouEngine extends Engine {
 			e.printStackTrace();
 			return null;
 		}
+	
 		//title
 		String title=urlEle.text();
 		System.out.println(title);
