@@ -47,16 +47,16 @@ public class JsoupTest {
 		long btime=System.currentTimeMillis();
 		System.out.println("begin time->"+btime);
 		
-		Scanner scanner=new Scanner(new File(args[0]));//InputStream is=baidu.getClass().getResourceAsStream("/keywords");Config.keywords
+		Scanner scanner=new Scanner(new File(args[0]));
 		while(scanner.hasNextLine()){
 			String word=scanner.nextLine();
 			baidu.request(word);
-			bing.request(word);
 			sogou.request(word);
 			so.request(word);
+			bing.request(word);
 		}
 		scanner.close();
-		
+		DBUtil.release();
 		System.out.println("cost time->"+(System.currentTimeMillis()-btime)/1000+" seconds; "
 				+"data count->"+DBUtil.count());
 	}

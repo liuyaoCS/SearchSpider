@@ -18,7 +18,7 @@ public class DataSource {
 		}
 		return cpds;
 	}
-	public  static void configMysql()throws PropertyVetoException{
+	private  static void configMysql()throws PropertyVetoException{
 		cpds=new ComboPooledDataSource();
 		cpds.setDriverClass("com.mysql.jdbc.Driver");
 //		cpds.setJdbcUrl("jdbc:mysql://localhost:3306/metasearch");

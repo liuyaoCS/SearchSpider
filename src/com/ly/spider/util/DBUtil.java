@@ -75,37 +75,17 @@ public class DBUtil {
 			statement.setString(1, item.getPageurl());
 			ResultSet rs=statement.executeQuery();
 			if(rs.next()){
-				
-				if(item.getRank_baidu()>0 && rs.getInt("rank_baidu")==0){
-					String UPDATE_BAIDU="update page set rank_baidu=? where pageurl=?";
-					statement.close();
-					statement=(PreparedStatement) connection.prepareStatement(UPDATE_BAIDU);
-					statement.setInt(1, item.getRank_baidu());
-					statement.setString(2, item.getPageurl());
-					statement.executeUpdate();
-				}else if(item.getRank_360()>0 && rs.getInt("rank_360")==0){
-					String UPDATE_360="update page set rank_360=? where pageurl=?";
-					statement.close();
-					statement=(PreparedStatement) connection.prepareStatement(UPDATE_360);
-					statement.setInt(1, item.getRank_360());
-					statement.setString(2, item.getPageurl());
-					statement.executeUpdate();
-				}else if(item.getRank_sogou()>0 && rs.getInt("rank_sogou")==0){
-					String UPDATE_SOGOU="update page set rank_sogou=? where pageurl=?";
-					statement.close();
-					statement=(PreparedStatement) connection.prepareStatement(UPDATE_SOGOU);
-					statement.setInt(1, item.getRank_sogou());
-					statement.setString(2, item.getPageurl());
-					statement.executeUpdate();
-				}else if(item.getRank_bing()>0 && rs.getInt("rank_bing")==0){
-					String UPDATE_BING="update page set rank_bing=? where pageurl=?";
-					statement.close();
-					statement=(PreparedStatement) connection.prepareStatement(UPDATE_BING);
-					statement.setInt(1, item.getRank_bing());
-					statement.setString(2, item.getPageurl());
-					statement.executeUpdate();
-				}else{
-					//nothing to do
+				String[] rank_items=new String[]{"rank_baidu","rank_sogou","rank_360","rank_bing"};
+				int[] rank_values=new int[]{item.getRank_baidu(),item.getRank_sogou(),item.getRank_360(),item.getRank_bing()};
+				for(int i=0;i<rank_values.length;i++){
+					if(rank_values[i]>0 && rs.getInt(rank_items[i])==0){
+						String UPDATE="update page set "+rank_items[i]+"=? where pageurl=?";
+						statement.close();
+						statement=(PreparedStatement) connection.prepareStatement(UPDATE);
+						statement.setInt(1, rank_values[i]);
+						statement.setString(2, item.getPageurl());
+						statement.executeUpdate();
+					}
 				}
 				statement.close();
 				connection.close();
@@ -147,5 +127,8 @@ public class DBUtil {
 			e.printStackTrace();
 		}
 		
+	}
+	public static void release(){
+		DataSource.releaseDS();
 	}
 }

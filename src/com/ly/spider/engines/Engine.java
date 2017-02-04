@@ -70,9 +70,15 @@ public abstract class Engine {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-			if(doc==null)break;
+			if(doc==null){
+				break;
+			}
 			
-			Element container = doc.select(getContainerTag()).get(0);
+			Elements containers = doc.select(getContainerTag());
+			if(containers==null){
+				break;
+			}
+			Element container=containers.get(0);
 			Elements list=container.select(getListTag());
 			for (Element searchItemEle : list){
 				int seq=(i>0 && i<10)?(i*10-10):i;
