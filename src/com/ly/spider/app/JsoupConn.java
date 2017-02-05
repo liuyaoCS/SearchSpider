@@ -1,8 +1,7 @@
 package com.ly.spider.app;
 
+import java.util.HashMap;
 import java.util.Map;
-
-import org.apache.commons.collections.map.HashedMap;
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
 
@@ -27,7 +26,7 @@ public class JsoupConn {
 //		Upgrade-Insecure-Requests:1
 //		User-Agent:Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/46.0.2490.86 Safari/537.36
 	private static void configHeader(String url){
-		Map<String, String> cookies=new HashedMap();
+		Map<String, String> cookies=new HashMap();
 		cookies.put("lianjia_uuid",	"2a78cbb5-d0ec-4114-8d56-aba9b4e80711");
 		cookies.put("_jzqckmp","1");
 		cookies.put("all-lj","59dc31ee6d382c2bb143f566d268070e");

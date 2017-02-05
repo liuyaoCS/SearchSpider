@@ -13,6 +13,7 @@ import org.jsoup.select.Elements;
 
 import com.ly.spider.app.Config;
 import com.ly.spider.app.JsoupConn;
+import com.ly.spider.engines.BaiduEngine;
 import com.ly.spider.util.DBUtil;
 import com.ly.spider.util.SecureUtil;
 
@@ -24,7 +25,9 @@ public class CommonTest {
 		//testSogou();
 		//testSo();
 		//testBD();
-		System.out.println(DBUtil.count());
+		//System.out.println(DBUtil.count());
+		BaiduEngine bEngine=new BaiduEngine(null, null, null, null, null, null, null, null);
+		System.out.println(bEngine.getClass().getSimpleName());
 	}
 
 	private static void testBD(){
