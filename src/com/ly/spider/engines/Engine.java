@@ -37,6 +37,9 @@ public abstract class Engine {
 		this.steps=steps;
 	}
 	protected abstract String getPageUrl(String rawUrl);
+	protected  String handleStyle(String content){
+		return content.replaceAll("\r|\n", "");
+	}
 	private  SearchItem parseItem(Element searchItem,String wd,int rank){
 		Elements urlEles=searchItem.select(itemATag);
 		if(urlEles.size()==0){
@@ -63,10 +66,7 @@ public abstract class Engine {
 		}		
 		//title
 		String title=urlEle.html();
-		////去除<!-->
-		Pattern pattern_title = Pattern.compile("<!--.+?>"/*, Pattern.DOTALL*/);
-		Matcher matcher_title = pattern_title.matcher(title);
-		title=matcher_title.replaceAll("");
+		title=handleStyle(title);
 		System.out.println("title->"+title);
 		//summary
 		Elements summaryEles=searchItem.select(itemSummaryTag);
@@ -83,11 +83,8 @@ public abstract class Engine {
 		if(summaryEle.select("a,cite").size()>0){
 			return null;
 		}
-		////去除<!-->
 		String summary=summaryEle.html();
-		Pattern pattern_summary = Pattern.compile("<!--.+?>"/*, Pattern.DOTALL*/);
-		Matcher matcher_summary = pattern_summary.matcher(summary);
-		summary=matcher_summary.replaceAll("");
+		summary=handleStyle(summary);
 		System.out.println("summary->"+summary);
 		//rank
 		int rank_baidu=0,rank_sogou=0,rank_360=0,rank_bing=0;

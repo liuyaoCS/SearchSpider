@@ -15,6 +15,14 @@ public class BingEngine extends Engine {
 		// TODO Auto-generated method stub
 		return rawUrl;
 	}
+
+	@Override
+	protected String handleStyle(String content) {
+		// TODO Auto-generated method stub
+		String text=super.handleStyle(content);
+		return text.replaceAll("<(span|/span).*?>", "")
+				.replaceAll("<strong>", "<em>").replaceAll("</strong>", "</em>");
+	}
 	
 
 }

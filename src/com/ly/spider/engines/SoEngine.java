@@ -37,6 +37,14 @@ public class SoEngine extends Engine {
 		}
 		return ret;
 	}
+
+	@Override
+	protected String handleStyle(String content) {
+		// TODO Auto-generated method stub
+		String text=super.handleStyle(content);
+		return text.replaceAll("<(span|/span).*?>", "")
+				   .replaceAll("<img.+?/>", "");
+	}
 	
 
 }

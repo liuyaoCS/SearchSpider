@@ -30,6 +30,13 @@ public class BaiduEngine extends Engine {
 		}
 		return pageurl;
 	}
+
+	@Override
+	protected String handleStyle(String content) {
+		// TODO Auto-generated method stub
+		String text=super.handleStyle(content);
+		return text.replaceAll("<(span|/span).*?>", "");
+	}
 	
 
 }

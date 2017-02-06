@@ -38,6 +38,15 @@ public class SogouEngine extends Engine {
 		}
 		return pageurl;
 	}
+
+
+	@Override
+	protected String handleStyle(String content) {
+		// TODO Auto-generated method stub
+		String text=super.handleStyle(content);
+		return text.replaceAll("<span style=\"display:none\".+/span>", "")
+				   .replaceAll("<(s|/s|!--).+?>", "");
+	}
 	
 
 }

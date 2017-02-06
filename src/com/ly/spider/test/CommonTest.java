@@ -29,11 +29,10 @@ public class CommonTest {
 		//testBD();
 		//System.out.println(DBUtil.count());
 		//testClassName();
-		String text="英文缩写为<em><!--red_beg-->AI"
-				+ "<!--red_end--></em>";
-		Pattern pattern5 = Pattern.compile("<!--.+?>"/*, Pattern.DOTALL*/);
-		Matcher matcher5 = pattern5.matcher(text);
-		String string5 = matcher5.replaceAll("");
+		String text="英文缩写为<em><span>aa</span>AI</em>";
+		
+		//String string5=text.replaceAll("<span style=\"display:none\".+/span>", "").replaceAll("<(s|/s|!--).+?>", "");
+		String string5=text.replaceAll("<(span|/span)>", "");
 		System.out.println(string5);  
 	}
 
