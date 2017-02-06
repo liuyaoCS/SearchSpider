@@ -16,14 +16,14 @@ import com.ly.spider.bean.SearchItem;
 import com.ly.spider.util.DBUtil;
 
 public abstract class Engine {
-	protected String baseUrl;
-	protected String intputName;
-	protected String pageName;
-	protected String containerTag;
-	protected String listTag;
-	protected String itemATag;
-	protected String itemSummaryTag;
-	protected int[] steps;
+	private String baseUrl;
+	private String intputName;
+	private String pageName;
+	private String containerTag;
+	private String listTag;
+	private String itemATag;
+	private String itemSummaryTag;
+	private int[] steps;
 	
 	public Engine(String baseUrl,String intputName,String pageName,String containTag,String listTag,String itemATag,String itemSummaryTag,int[] steps) {
 		// TODO Auto-generated constructor stub
@@ -37,7 +37,7 @@ public abstract class Engine {
 		this.steps=steps;
 	}
 	protected abstract String getPageUrl(String rawUrl);
-	protected  SearchItem parseItem(Element searchItem,String wd,int rank){
+	private  SearchItem parseItem(Element searchItem,String wd,int rank){
 		Elements urlEles=searchItem.select(itemATag);
 		if(urlEles.size()==0){
 			return null;
@@ -62,7 +62,11 @@ public abstract class Engine {
 			return null;
 		}		
 		//title
-		String title=urlEle.text();
+		String title=urlEle.html();
+		////去除<!-->
+		Pattern pattern_title = Pattern.compile("<!--.+?>"/*, Pattern.DOTALL*/);
+		Matcher matcher_title = pattern_title.matcher(title);
+		title=matcher_title.replaceAll("");
 		System.out.println("title->"+title);
 		//summary
 		Elements summaryEles=searchItem.select(itemSummaryTag);
@@ -81,9 +85,9 @@ public abstract class Engine {
 		}
 		////去除<!-->
 		String summary=summaryEle.html();
-		Pattern pattern = Pattern.compile("<!--.+?>"/*, Pattern.DOTALL*/);
-		Matcher matcher = pattern.matcher(summary);
-		summary=matcher.replaceAll("");
+		Pattern pattern_summary = Pattern.compile("<!--.+?>"/*, Pattern.DOTALL*/);
+		Matcher matcher_summary = pattern_summary.matcher(summary);
+		summary=matcher_summary.replaceAll("");
 		System.out.println("summary->"+summary);
 		//rank
 		int rank_baidu=0,rank_sogou=0,rank_360=0,rank_bing=0;
