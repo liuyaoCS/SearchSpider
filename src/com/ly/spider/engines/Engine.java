@@ -1,6 +1,9 @@
 package com.ly.spider.engines;
 
 import java.io.IOException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import org.jsoup.Jsoup;
 import org.jsoup.Connection.Response;
 import org.jsoup.nodes.Document;
@@ -72,11 +75,15 @@ public abstract class Engine {
 		}else{
 			summaryEle=summaryEles.get(0);
 		}
-		//过滤 a cite 标签
+		////过滤 a cite 标签
 		if(summaryEle.select("a,cite").size()>0){
 			return null;
 		}
-		String summary=summaryEle.text();
+		////去除<!-->
+		String summary=summaryEle.html();
+		Pattern pattern = Pattern.compile("<!--.+?>"/*, Pattern.DOTALL*/);
+		Matcher matcher = pattern.matcher(summary);
+		summary=matcher.replaceAll("");
 		System.out.println("summary->"+summary);
 		//rank
 		int rank_baidu=0,rank_sogou=0,rank_360=0,rank_bing=0;

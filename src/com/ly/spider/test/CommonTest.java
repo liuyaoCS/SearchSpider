@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URI;
 import java.net.URLDecoder;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.jsoup.Connection;
 import org.jsoup.Jsoup;
@@ -26,6 +28,16 @@ public class CommonTest {
 		//testSo();
 		//testBD();
 		//System.out.println(DBUtil.count());
+		//testClassName();
+		String text="英文缩写为<em><!--red_beg-->AI"
+				+ "<!--red_end--></em>";
+		Pattern pattern5 = Pattern.compile("<!--.+?>"/*, Pattern.DOTALL*/);
+		Matcher matcher5 = pattern5.matcher(text);
+		String string5 = matcher5.replaceAll("");
+		System.out.println(string5);  
+	}
+
+	private static void testClassName() {
 		BaiduEngine bEngine=new BaiduEngine(null, null, null, null, null, null, null, null);
 		System.out.println(bEngine.getClass().getSimpleName());
 	}
