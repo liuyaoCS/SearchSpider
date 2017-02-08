@@ -8,7 +8,7 @@ import org.jsoup.Jsoup;
 public class JsoupConn {
 	private static Connection conn;
 	public static Connection getInstance(String url){
-		//charles监听
+		//charles监听 内网如果需要代理访问外网 也需要设置代理
 //		if(conn==null){
 //			setProxy();
 //		}
@@ -57,9 +57,12 @@ public class JsoupConn {
 	private static void setProxy(){
 		System.setProperty("http.maxRedirects", "50");
 		System.getProperties().setProperty("proxySet", "true");
-		// 如果不设置，只要代理IP和代理端口正确,此项不设置也可以
+		//charles proxy
 		String ip = "127.0.0.1";
+		String port="8888";
 		System.getProperties().setProperty("http.proxyHost", ip);
-		System.getProperties().setProperty("http.proxyPort", "8888");
+		System.getProperties().setProperty("http.proxyPort", port);
+		System.getProperties().setProperty("https.proxyHost", ip);
+		System.getProperties().setProperty("https.proxyPort", port);
 	}
 }
